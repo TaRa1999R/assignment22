@@ -17,7 +17,9 @@ class Mainwindow ( QMainWindow ) :
         self.tasks = self.database.get_tasks ()
 
         self.read_tasks_from_database ()
-    
+
+        self.ui.add.clicked.connect (self.add_new_task)
+
 
     def read_tasks_from_database ( self ) :
         for i in range (len(self.tasks)) :
@@ -43,6 +45,43 @@ class Mainwindow ( QMainWindow ) :
             self.ui.task_section.addWidget (new_chckbox , i , 0)
             self.ui.task_section.addWidget (new_label , i , 1)
             self.ui.task_section.addWidget (new_button , i , 2)
+
+
+    def add_new_task ( self ) :
+        if self.ui.new_title.text() == "" :
+            text = f"You haven't type any title for new task.\nPlease write the title and details first, and push the button at the end. \nThanks😇"
+            message = QMessageBox (windowTitle = "❌Error!!❌" , text = text)
+            message.exec_ ()
+        
+        else :
+            title = self.ui.new_title.text ()
+            description = self.ui.new_description.toPlainText ()
+            date = self.ui.new_date.text ()
+            time = self.ui.new_time.text ()
+            if self.ui.priority.currentText () == "Low" :
+                priority = 0
+            
+            elif self.ui.priority.currentText () == "Medium" :
+                priority = 1
+            
+            elif self.ui.priority.currentText () == "High" :
+                priority = 2
+
+            
+            feedback = self.database.add_new_task (title , description , date , time , priority)
+
+            if feedback == True :
+                self.read_tasks_from_database ()
+                self.ui.new_title.setText ("")
+                self.ui.new_description.setText ("")
+                self.ui.new_date.setText ("")
+                self.ui.new_time.setText ("")
+                self.ui.priority.setCurrentText ("Low")
+
+            else :
+                text = f"New task couldn't be added.😒 \nPlease try again."
+                message = QMessageBox (windowTitle = "❌Error!!❌" , text = text)
+                message.exec_ ()
 
 
 

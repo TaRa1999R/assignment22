@@ -190,6 +190,9 @@ border-bottom-right-radius: 0px;</string>
        <property name="text">
         <string/>
        </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Normal</enum>
+       </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>

@@ -13,8 +13,17 @@ class Database () :
         tasks = result.fetchall ()
         return (tasks)
 
-    def add_new_task ( self ) :
-        ...
+
+    def add_new_task ( self , title , discription , date , time , periority) :
+        try :
+            query = f"INSERT INTO tasks(title, discription, date, time, priority, state) VALUES ('{title}', '{discription}', '{date}', '{time}', {periority}, 0)"
+            self.cur.execute (query)
+            self.con.commit ()
+            return True
+        
+        except :
+            return False
+
 
     def delete_task ( self ) :
         ...

@@ -111,6 +111,7 @@ class Ui_MainWindow(object):
 "border-top-right-radius: 0px;\n"
 "border-bottom-left-radius: 0px;\n"
 "border-bottom-right-radius: 0px;")
+        self.new_date.setEchoMode(QLineEdit.Normal)
         self.new_date.setAlignment(Qt.AlignCenter)
 
         self.add_section.addWidget(self.new_date, 2, 1, 1, 1)
