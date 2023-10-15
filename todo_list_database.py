@@ -11,7 +11,7 @@ class Database () :
         query = f"SELECT * FROM tasks"
         result = self.cur.execute (query)
         tasks = result.fetchall ()
-        print (tasks)
+        return (tasks)
 
     def add_new_task ( self ) :
         ...
