@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(385, 577)
+        MainWindow.resize(385, 588)
         MainWindow.setStyleSheet(u"background-color: rgb(121, 121, 121);")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -84,6 +84,11 @@ class Ui_MainWindow(object):
 
         self.new_time = QLineEdit(self.gridLayoutWidget_2)
         self.new_time.setObjectName(u"new_time")
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.new_time.sizePolicy().hasHeightForWidth())
+        self.new_time.setSizePolicy(sizePolicy)
         font1 = QFont()
         font1.setPointSize(12)
         self.new_time.setFont(font1)
@@ -98,6 +103,8 @@ class Ui_MainWindow(object):
 
         self.new_date = QLineEdit(self.gridLayoutWidget_2)
         self.new_date.setObjectName(u"new_date")
+        sizePolicy.setHeightForWidth(self.new_date.sizePolicy().hasHeightForWidth())
+        self.new_date.setSizePolicy(sizePolicy)
         self.new_date.setFont(font1)
         self.new_date.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
 "border-top-left-radius: 0px;\n"
@@ -110,7 +117,12 @@ class Ui_MainWindow(object):
 
         self.new_title = QLineEdit(self.gridLayoutWidget_2)
         self.new_title.setObjectName(u"new_title")
-        self.new_title.setFont(font1)
+        sizePolicy.setHeightForWidth(self.new_title.sizePolicy().hasHeightForWidth())
+        self.new_title.setSizePolicy(sizePolicy)
+        font2 = QFont()
+        font2.setPointSize(12)
+        font2.setBold(False)
+        self.new_title.setFont(font2)
         self.new_title.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
 "border-top-left-radius: 0px;\n"
 "border-top-right-radius: 0px;\n"
@@ -136,6 +148,8 @@ class Ui_MainWindow(object):
 
         self.new_description = QTextEdit(self.gridLayoutWidget_2)
         self.new_description.setObjectName(u"new_description")
+        sizePolicy.setHeightForWidth(self.new_description.sizePolicy().hasHeightForWidth())
+        self.new_description.setSizePolicy(sizePolicy)
         self.new_description.setFont(font1)
         self.new_description.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
 "border-top-left-radius: 0px;\n"
@@ -147,10 +161,10 @@ class Ui_MainWindow(object):
 
         self.add = QPushButton(self.gridLayoutWidget_2)
         self.add.setObjectName(u"add")
-        font2 = QFont()
-        font2.setPointSize(12)
-        font2.setBold(True)
-        self.add.setFont(font2)
+        font3 = QFont()
+        font3.setPointSize(12)
+        font3.setBold(True)
+        self.add.setFont(font3)
         self.add.setStyleSheet(u"background-color: rgb(255, 255, 127);border-right-bottom-radius: 5xp;")
 
         self.add_section.addWidget(self.add, 0, 2, 1, 1)
