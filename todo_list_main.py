@@ -21,21 +21,25 @@ class Mainwindow ( QMainWindow ) :
 
         self.ui.add.clicked.connect (self.add_new_task)
 
-        for i in range (len (self.check)) :
-            self.check[i]["check"].clicked.connect (partial (self.check_tasks , self.check[i]["check"] , self.check[i]["id"] ,self.check[i]["label"] , self.check[i]["priority"])) 
+        # for i in range (len (self.check)) :
+        #     self.check[i]["check"].clicked.connect (partial (self.check_tasks , self.check[i]["check"] , self.check[i]["id"] ,self.check[i]["label"] , self.check[i]["priority"])) 
+
+        # for i in range (len (self.delete)) :
+        #     self.delete[i]["button"].clicked.connect (partial (self.delete_task , self.delete[i]["id"]))
 
 
 
     def read_tasks_from_database ( self ) :
-        self.check = []
-        self.delete = []
+        # self.check = []
+        # self.delete = []
+
         for i in range (len(self.tasks)) :
             if self.tasks[i][6] == 0 :
                 new_chckbox = QCheckBox ()
                 new_label = QLabel ()
                 new_button = QPushButton ()
-                self.check.append ({"check" : new_chckbox , "id" : self.tasks[i][0] , "label" : new_label , "priority" : self.tasks[i][5]})
-                self.delete.append (new_button)
+                # self.check.append ({"check" : new_chckbox , "id" : self.tasks[i][0] , "label" : new_label , "priority" : self.tasks[i][5]})
+                # self.delete.append ({"button" : new_button , "id" : self.tasks[i][0]})
 
                 if self.tasks[i][5] == 0 :
                     new_label.setStyleSheet ("background-color: rgb(0,255,127);")
@@ -63,8 +67,8 @@ class Mainwindow ( QMainWindow ) :
                 new_chckbox = QCheckBox ()
                 new_label = QLabel ()
                 new_button = QPushButton ()
-                self.check.append ({"check" : new_chckbox , "id" : self.tasks[i][0] , "label" : new_label , "priority" : self.tasks[i][5]})
-                self.delete.append (new_button)
+                # self.check.append ({"check" : new_chckbox , "id" : self.tasks[i][0] , "label" : new_label , "priority" : self.tasks[i][5]})
+                # self.delete.append ({"button " : new_button , "id" : self.tasks[i][0]})
                 
                 new_label.setStyleSheet ("background-color: rgb(180,180,180);")
                 new_label.setText (self.tasks[i][1])
@@ -79,10 +83,7 @@ class Mainwindow ( QMainWindow ) :
                 self.ui.task_section.addWidget (new_label , i + len (self.check) , 1)
                 self.ui.task_section.addWidget (new_button , i + len (self.check) , 2)
 
-
         
-
-
     def add_new_task ( self ) :
         if self.ui.new_title.text() == "" :
             text = f"You haven't type any title for new task.\nPlease write the title and details first, and push the button at the end. \nThanks😇"
@@ -102,7 +103,6 @@ class Mainwindow ( QMainWindow ) :
             
             elif self.ui.priority.currentText () == "High" :
                 priority = 2
-
             
             feedback = self.database.add_new_task (title , description , date , time , priority)
 
@@ -120,26 +120,32 @@ class Mainwindow ( QMainWindow ) :
                 message.exec_ ()
 
 
-    def check_tasks ( self , checkbox , id , label , priority) :
-        if checkbox.isChecked () == True :
-            self.database.update_task (id , 1)
-            label.setStyleSheet ("background-color: rgb(180,180,180);")
+    # def check_tasks ( self , checkbox , id , label , priority) :
+    #     if checkbox.isChecked () == True :
+    #         self.database.update_task (id , 1)
+    #         label.setStyleSheet ("background-color: rgb(180,180,180);")
 
 
-        else :
-            self.database.update_task (id , 0)
-            if priority == 0 :
-                label.setStyleSheet ("background-color: rgb(0,255,127);")
+    #     else :
+    #         self.database.update_task (id , 0)
+    #         if priority == 0 :
+    #             label.setStyleSheet ("background-color: rgb(0,255,127);")
                 
-            elif priority == 1 :
-                label.setStyleSheet ("background-color: rgb(255,160,112);")
+    #         elif priority == 1 :
+    #             label.setStyleSheet ("background-color: rgb(255,160,112);")
 
-            elif priority == 2 :
-                label.setStyleSheet ("background-color: rgb(255,61,103);")
+    #         elif priority == 2 :
+    #             label.setStyleSheet ("background-color: rgb(255,61,103);")
         
 
-    def delete_tasks ( self ) :
-        ...
+    # def delete_task ( self , id ) :
+    #     result = self.database.delete_task ( id )
+    #     if result == True :
+    #         self.read_tasks_from_database ()
+    #         print ("Done")
+    #     else :
+    #         print ("Error")
+    #         print(result)
 
 
 

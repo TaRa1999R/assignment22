@@ -26,15 +26,22 @@ class Database () :
             return False
 
 
-    def delete_task ( self ) :
-        ...
-
-    def update_task ( self , id , mode ) :
+    def delete_task ( self , id ) :
         try :
-            query = f"UPDATE tasks SET state = {mode} WHERE id = {id}"
+            text = "0"
+            query = f"DELETE FROM tasks WHERE id = {id}"
+            text += "1"
             self.cur.execute (query)
+            text += "2"
             self.con.commit ()
-            return ("done" , mode)
+            text += "3"
+            return True
         
         except :
-            return False
+            return (text)
+
+
+    def update_task ( self , id , mode ) :
+        query = f"UPDATE tasks SET state = {mode} WHERE id = {id}"
+        self.cur.execute (query)
+        self.con.commit ()

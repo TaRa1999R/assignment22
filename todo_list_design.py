@@ -24,22 +24,19 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(385, 588)
-        MainWindow.setStyleSheet(u"background-color: rgb(121, 121, 121);")
+        MainWindow.setStyleSheet(u"background-color: rgb(110, 110, 110);")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.gridLayoutWidget = QWidget(self.centralwidget)
-        self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
-        self.gridLayoutWidget.setGeometry(QRect(0, 0, 381, 331))
-        self.task_section = QGridLayout(self.gridLayoutWidget)
+        self.gridLayout = QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.task_section = QGridLayout()
         self.task_section.setObjectName(u"task_section")
-        self.task_section.setContentsMargins(0, 0, 0, 0)
-        self.gridLayoutWidget_2 = QWidget(self.centralwidget)
-        self.gridLayoutWidget_2.setObjectName(u"gridLayoutWidget_2")
-        self.gridLayoutWidget_2.setGeometry(QRect(0, 333, 381, 205))
-        self.add_section = QGridLayout(self.gridLayoutWidget_2)
+
+        self.gridLayout.addLayout(self.task_section, 0, 0, 1, 1)
+
+        self.add_section = QGridLayout()
         self.add_section.setObjectName(u"add_section")
-        self.add_section.setContentsMargins(0, 0, 0, 0)
-        self.time_lable = QLabel(self.gridLayoutWidget_2)
+        self.time_lable = QLabel(self.centralwidget)
         self.time_lable.setObjectName(u"time_lable")
         font = QFont()
         font.setPointSize(11)
@@ -50,7 +47,7 @@ class Ui_MainWindow(object):
 
         self.add_section.addWidget(self.time_lable, 3, 0, 1, 1)
 
-        self.description_lable = QLabel(self.gridLayoutWidget_2)
+        self.description_lable = QLabel(self.centralwidget)
         self.description_lable.setObjectName(u"description_lable")
         self.description_lable.setFont(font)
         self.description_lable.setStyleSheet(u"color: rgb(255, 255, 255);")
@@ -58,7 +55,7 @@ class Ui_MainWindow(object):
 
         self.add_section.addWidget(self.description_lable, 1, 0, 1, 1)
 
-        self.title_lable = QLabel(self.gridLayoutWidget_2)
+        self.title_lable = QLabel(self.centralwidget)
         self.title_lable.setObjectName(u"title_lable")
         self.title_lable.setFont(font)
         self.title_lable.setStyleSheet(u"color: rgb(255, 255, 255);")
@@ -66,7 +63,7 @@ class Ui_MainWindow(object):
 
         self.add_section.addWidget(self.title_lable, 0, 0, 1, 1)
 
-        self.priority_lable = QLabel(self.gridLayoutWidget_2)
+        self.priority_lable = QLabel(self.centralwidget)
         self.priority_lable.setObjectName(u"priority_lable")
         self.priority_lable.setFont(font)
         self.priority_lable.setStyleSheet(u"color: rgb(255, 255, 255);")
@@ -74,7 +71,7 @@ class Ui_MainWindow(object):
 
         self.add_section.addWidget(self.priority_lable, 4, 0, 1, 1)
 
-        self.date_lable = QLabel(self.gridLayoutWidget_2)
+        self.date_lable = QLabel(self.centralwidget)
         self.date_lable.setObjectName(u"date_lable")
         self.date_lable.setFont(font)
         self.date_lable.setStyleSheet(u"color: rgb(255, 255, 255);")
@@ -82,7 +79,7 @@ class Ui_MainWindow(object):
 
         self.add_section.addWidget(self.date_lable, 2, 0, 1, 1)
 
-        self.new_time = QLineEdit(self.gridLayoutWidget_2)
+        self.new_time = QLineEdit(self.centralwidget)
         self.new_time.setObjectName(u"new_time")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -97,11 +94,11 @@ class Ui_MainWindow(object):
 "border-top-right-radius: 0px;\n"
 "border-bottom-left-radius: 0px;\n"
 "border-bottom-right-radius: 0px;")
-        self.new_time.setAlignment(Qt.AlignCenter)
+        self.new_time.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.add_section.addWidget(self.new_time, 3, 1, 1, 1)
 
-        self.new_date = QLineEdit(self.gridLayoutWidget_2)
+        self.new_date = QLineEdit(self.centralwidget)
         self.new_date.setObjectName(u"new_date")
         sizePolicy.setHeightForWidth(self.new_date.sizePolicy().hasHeightForWidth())
         self.new_date.setSizePolicy(sizePolicy)
@@ -112,11 +109,11 @@ class Ui_MainWindow(object):
 "border-bottom-left-radius: 0px;\n"
 "border-bottom-right-radius: 0px;")
         self.new_date.setEchoMode(QLineEdit.Normal)
-        self.new_date.setAlignment(Qt.AlignCenter)
+        self.new_date.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.add_section.addWidget(self.new_date, 2, 1, 1, 1)
 
-        self.new_title = QLineEdit(self.gridLayoutWidget_2)
+        self.new_title = QLineEdit(self.centralwidget)
         self.new_title.setObjectName(u"new_title")
         sizePolicy.setHeightForWidth(self.new_title.sizePolicy().hasHeightForWidth())
         self.new_title.setSizePolicy(sizePolicy)
@@ -129,11 +126,11 @@ class Ui_MainWindow(object):
 "border-top-right-radius: 0px;\n"
 "border-bottom-left-radius: 0px;\n"
 "border-bottom-right-radius: 0px;")
-        self.new_title.setAlignment(Qt.AlignCenter)
+        self.new_title.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.add_section.addWidget(self.new_title, 0, 1, 1, 1)
 
-        self.priority = QComboBox(self.gridLayoutWidget_2)
+        self.priority = QComboBox(self.centralwidget)
         self.priority.addItem("")
         self.priority.addItem("")
         self.priority.addItem("")
@@ -147,7 +144,7 @@ class Ui_MainWindow(object):
 
         self.add_section.addWidget(self.priority, 4, 1, 1, 1)
 
-        self.new_description = QTextEdit(self.gridLayoutWidget_2)
+        self.new_description = QTextEdit(self.centralwidget)
         self.new_description.setObjectName(u"new_description")
         sizePolicy.setHeightForWidth(self.new_description.sizePolicy().hasHeightForWidth())
         self.new_description.setSizePolicy(sizePolicy)
@@ -160,7 +157,7 @@ class Ui_MainWindow(object):
 
         self.add_section.addWidget(self.new_description, 1, 1, 1, 1)
 
-        self.add = QPushButton(self.gridLayoutWidget_2)
+        self.add = QPushButton(self.centralwidget)
         self.add.setObjectName(u"add")
         font3 = QFont()
         font3.setPointSize(12)
@@ -169,6 +166,9 @@ class Ui_MainWindow(object):
         self.add.setStyleSheet(u"background-color: rgb(255, 255, 127);border-right-bottom-radius: 5xp;")
 
         self.add_section.addWidget(self.add, 0, 2, 1, 1)
+
+
+        self.gridLayout.addLayout(self.add_section, 1, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
