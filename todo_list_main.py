@@ -17,48 +17,70 @@ class Mainwindow ( QMainWindow ) :
         self.database = Database ()
         self.tasks = self.database.get_tasks ()
 
-        self.check = []
-        self.delete = []
-
         self.read_tasks_from_database ()
 
         self.ui.add.clicked.connect (self.add_new_task)
 
         for i in range (len (self.check)) :
-            self.check[i]["check"].clicked.connect (partial (self.check_tasks , self.check[i]["check"] , self.check[i]["id"])) 
+            self.check[i]["check"].clicked.connect (partial (self.check_tasks , self.check[i]["check"] , self.check[i]["id"] ,self.check[i]["label"] , self.check[i]["priority"])) 
 
 
 
     def read_tasks_from_database ( self ) :
+        self.check = []
+        self.delete = []
         for i in range (len(self.tasks)) :
-            new_chckbox = QCheckBox ()
-            new_label = QLabel ()
-            new_button = QPushButton ()
-            self.check.append ({"check" : new_chckbox , "id" : self.tasks[i][0]})
-            self.delete.append (new_button)
+            if self.tasks[i][6] == 0 :
+                new_chckbox = QCheckBox ()
+                new_label = QLabel ()
+                new_button = QPushButton ()
+                self.check.append ({"check" : new_chckbox , "id" : self.tasks[i][0] , "label" : new_label , "priority" : self.tasks[i][5]})
+                self.delete.append (new_button)
 
-            if self.tasks[i][5] == 0 :
-                new_label.setStyleSheet ("background-color: rgb(0,255,127);")
-            
-            elif self.tasks[i][5] == 1 :
-                new_label.setStyleSheet ("background-color: rgb(255,160,112);")
+                if self.tasks[i][5] == 0 :
+                    new_label.setStyleSheet ("background-color: rgb(0,255,127);")
+                
+                elif self.tasks[i][5] == 1 :
+                    new_label.setStyleSheet ("background-color: rgb(255,160,112);")
 
-            
-            elif self.tasks[i][5] == 2 :
-                new_label.setStyleSheet ("background-color: rgb(255,61,103);")
+                
+                elif self.tasks[i][5] == 2 :
+                    new_label.setStyleSheet ("background-color: rgb(255,61,103);")
 
-            new_label.setText (self.tasks[i][1])
-            new_button.setText ("🗑")
-            new_button.setStyleSheet ("background-color: rgb(255,255,127);")
-            new_chckbox.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
-            new_button.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
-            new_label.setFont (QFont ("Segoe UI" , 12))
+                new_label.setText (self.tasks[i][1])
+                new_button.setText ("🗑")
+                new_button.setStyleSheet ("background-color: rgb(255,255,127);")
+                new_chckbox.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
+                new_button.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
+                new_label.setFont (QFont ("Segoe UI" , 12))
+                self.ui.task_section.addWidget (new_chckbox , i , 0)
+                self.ui.task_section.addWidget (new_label , i , 1)
+                self.ui.task_section.addWidget (new_button , i , 2)
+    
+        
+        for i in range (len(self.tasks)) :
             if self.tasks[i][6] == 1 :
+                new_chckbox = QCheckBox ()
+                new_label = QLabel ()
+                new_button = QPushButton ()
+                self.check.append ({"check" : new_chckbox , "id" : self.tasks[i][0] , "label" : new_label , "priority" : self.tasks[i][5]})
+                self.delete.append (new_button)
+                
+                new_label.setStyleSheet ("background-color: rgb(180,180,180);")
+                new_label.setText (self.tasks[i][1])
+                new_button.setText ("🗑")
+                new_button.setStyleSheet ("background-color: rgb(255,255,127);")
+                new_chckbox.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
+                new_button.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
+                new_label.setFont (QFont ("Segoe UI" , 12))
                 new_chckbox.setChecked (True)
 
-            self.ui.task_section.addWidget (new_chckbox , i , 0)
-            self.ui.task_section.addWidget (new_label , i , 1)
-            self.ui.task_section.addWidget (new_button , i , 2)
+                self.ui.task_section.addWidget (new_chckbox , i + len (self.check) , 0)
+                self.ui.task_section.addWidget (new_label , i + len (self.check) , 1)
+                self.ui.task_section.addWidget (new_button , i + len (self.check) , 2)
+
+
+        
 
 
     def add_new_task ( self ) :
@@ -98,18 +120,24 @@ class Mainwindow ( QMainWindow ) :
                 message.exec_ ()
 
 
-    def check_tasks ( self , checkbox , id ) :
+    def check_tasks ( self , checkbox , id , label , priority) :
         if checkbox.isChecked () == True :
-            result = self.database.update_task (id , 1)
-            print(result , id)
+            self.database.update_task (id , 1)
+            label.setStyleSheet ("background-color: rgb(180,180,180);")
 
 
         else :
-            result = self.database.update_task (id , 0)
-            print(result , id)
+            self.database.update_task (id , 0)
+            if priority == 0 :
+                label.setStyleSheet ("background-color: rgb(0,255,127);")
+                
+            elif priority == 1 :
+                label.setStyleSheet ("background-color: rgb(255,160,112);")
+
+            elif priority == 2 :
+                label.setStyleSheet ("background-color: rgb(255,61,103);")
         
 
-   
     def delete_tasks ( self ) :
         ...
 
