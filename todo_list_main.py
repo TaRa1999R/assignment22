@@ -16,6 +16,9 @@ class Mainwindow ( QMainWindow ) :
         self.database = Database ()
         self.tasks = self.database.get_tasks ()
 
+        self.check = []
+        self.delete = []
+
         self.read_tasks_from_database ()
 
         self.ui.add.clicked.connect (self.add_new_task)
@@ -82,6 +85,14 @@ class Mainwindow ( QMainWindow ) :
                 text = f"New task couldn't be added.😒 \nPlease try again."
                 message = QMessageBox (windowTitle = "❌Error!!❌" , text = text)
                 message.exec_ ()
+
+
+    def done_tasks ( self ) :
+        ...
+
+   
+    def delete_tasks ( self ) :
+        ...
 
 
 
