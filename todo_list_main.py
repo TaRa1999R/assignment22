@@ -1,5 +1,6 @@
 
 import sys
+from functools import partial
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 from PySide6.QtGui import *
@@ -23,12 +24,19 @@ class Mainwindow ( QMainWindow ) :
 
         self.ui.add.clicked.connect (self.add_new_task)
 
+        for i in range (len (self.check)) :
+            self.check[i]["check"].clicked.connect (partial (self.check_tasks , self.check[i]["check"] , self.check[i]["id"])) 
+
+
 
     def read_tasks_from_database ( self ) :
         for i in range (len(self.tasks)) :
             new_chckbox = QCheckBox ()
             new_label = QLabel ()
             new_button = QPushButton ()
+            self.check.append ({"check" : new_chckbox , "id" : self.tasks[i][0]})
+            self.delete.append (new_button)
+
             if self.tasks[i][5] == 0 :
                 new_label.setStyleSheet ("background-color: rgb(0,255,127);")
             
@@ -45,6 +53,9 @@ class Mainwindow ( QMainWindow ) :
             new_chckbox.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
             new_button.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
             new_label.setFont (QFont ("Segoe UI" , 12))
+            if self.tasks[i][6] == 1 :
+                new_chckbox.setChecked (True)
+
             self.ui.task_section.addWidget (new_chckbox , i , 0)
             self.ui.task_section.addWidget (new_label , i , 1)
             self.ui.task_section.addWidget (new_button , i , 2)
@@ -87,8 +98,16 @@ class Mainwindow ( QMainWindow ) :
                 message.exec_ ()
 
 
-    def done_tasks ( self ) :
-        ...
+    def check_tasks ( self , checkbox , id ) :
+        if checkbox.isChecked () == True :
+            result = self.database.update_task (id , 1)
+            print(result , id)
+
+
+        else :
+            result = self.database.update_task (id , 0)
+            print(result , id)
+        
 
    
     def delete_tasks ( self ) :

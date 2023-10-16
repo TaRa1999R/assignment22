@@ -16,7 +16,8 @@ class Database () :
 
     def add_new_task ( self , title , discription , date , time , periority) :
         try :
-            query = f"INSERT INTO tasks(title, discription, date, time, priority, state) VALUES ('{title}', '{discription}', '{date}', '{time}', {periority}, 0)"
+            query = f"INSERT INTO tasks(title, discription, date, time, priority, state)\
+                  VALUES ('{title}', '{discription}', '{date}', '{time}', {periority}, 0)"
             self.cur.execute (query)
             self.con.commit ()
             return True
@@ -28,5 +29,12 @@ class Database () :
     def delete_task ( self ) :
         ...
 
-    def update_task ( self ) :
-        ...
+    def update_task ( self , id , mode ) :
+        try :
+            query = f"UPDATE tasks SET state = {mode} WHERE id = {id}"
+            self.cur.execute (query)
+            self.con.commit ()
+            return ("done" , mode)
+        
+        except :
+            return False
