@@ -20,29 +20,39 @@ class Mainwindow ( QMainWindow ) :
         self.ui.add.clicked.connect (self.add_task)
         for i in range (len (self.checkbox)) :
             self.checkbox[i]["checkbox"].clicked.connect (partial (self.check_task , self.checkbox[i]["checkbox"] , self.checkbox[i]["id"]))
+        
+        for i in range (len (self.button_bin)) :
+            self.button_bin[i]["button"].clicked.connect (partial (self.remove_task , self.button_bin[i]["id"]))
+
+        for i in range (len (self.button_info)) :
+            self.button_info[i]["button"].clicked.connect (partial (self.show_task_info , self.button_info[i]["id"] ))
 
     
     def read_tasks ( self ) :
         self.tasks = self.database.get_tasks ()
         self.checkbox = []
         self.button_bin = []
-        self.label_info = []
+        self.button_info = []
 
         for i in range (len (self.tasks)) :
             if self.tasks[i][6] == 0 :
                 new_checkbox = QCheckBox ()
                 new_label = QLabel ()
                 new_button = QPushButton ()
+                new_button_info = QPushButton ()
                 self.checkbox.append ({"checkbox" : new_checkbox , "id" : self.tasks[i][0]})
                 self.button_bin.append ({"button" : new_button , "id" : self.tasks[i][0]})
-                self.label_info.append ({"label" : new_label , "id" : self.tasks[i][0]})
+                self.button_info.append ({"button" : new_button_info , "id" : self.tasks[i][0]})
 
                 new_label.setText (self.tasks[i][1])
                 new_button.setText ("🗑")
+                new_button_info.setText ("📁")
                 new_checkbox.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
                 new_button.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
+                new_button_info.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
                 new_label.setFont (QFont ("Segoe UI" , 12))
-                new_button.setStyleSheet ("background-color: rgb(207,165,255);")
+                new_button.setStyleSheet ("background-color: rgb(253,255,80);")
+                new_button_info.setStyleSheet ("background-color: rgb(207,165,255);")
                 if self.tasks[i][5] == 0 :
                     new_label.setStyleSheet ("background-color: rgb(0,255,127);")
                 
@@ -54,29 +64,35 @@ class Mainwindow ( QMainWindow ) :
 
                 self.ui.task_section.addWidget (new_checkbox , i , 0)
                 self.ui.task_section.addWidget (new_label , i , 1)
-                self.ui.task_section.addWidget (new_button , i , 2)
+                self.ui.task_section.addWidget (new_button_info , i , 2)
+                self.ui.task_section.addWidget (new_button , i , 3)
         
         for i in range (len (self.tasks)) :
             if self.tasks[i][6] == 1 :
                 new_checkbox = QCheckBox ()
                 new_label = QLabel ()
                 new_button = QPushButton ()
+                new_button_info = QPushButton ()
                 self.checkbox.append ({"checkbox" : new_checkbox , "id" : self.tasks[i][0]})
                 self.button_bin.append ({"button" : new_button , "id" : self.tasks[i][0]})
-                self.label_info.append ({"label" : new_label , "id" : self.tasks[i][0]})
+                self.button_info.append ({"button" : new_button_info , "id" : self.tasks[i][0]})
 
                 new_label.setText (self.tasks[i][1])
                 new_button.setText ("🗑")
+                new_button_info.setText ("...")
                 new_checkbox.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
                 new_button.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
+                new_button_info.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
                 new_label.setFont (QFont ("Segoe UI" , 12))
                 new_checkbox.setChecked (True)
                 new_button.setStyleSheet ("background-color: rgb(255,61,103);")
+                new_button_info.setStyleSheet ("background-color: rgb(255,61,103);")
                 new_label.setStyleSheet ("background-color: rgb(195,195,195);")
 
                 self.ui.task_section.addWidget (new_checkbox , i + len (self.checkbox) , 0)
                 self.ui.task_section.addWidget (new_label , i + len (self.checkbox) , 1)
-                self.ui.task_section.addWidget (new_button , i + len (self.checkbox) , 2)
+                self.ui.task_section.addWidget (new_button_info , i + len (self.checkbox) , 2)
+                self.ui.task_section.addWidget (new_button , i + len (self.checkbox) , 3)
 
 
     def add_task ( self ) :
@@ -118,25 +134,29 @@ class Mainwindow ( QMainWindow ) :
 
 
     def check_task ( self , checkbox , id ) :
-        print ("hi")
-        if checkbox.isChecked == True :
-            feedback = self.database.update_task (id , 1)
+        if checkbox.isChecked () == True :
+            self.database.update_task (id , 1)
         
         else :
-            feedback = self.database.update_task (id , 0)
+            self.database.update_task (id , 0)
         
-        print (feedback)
-        # self.read_tasks ()
-        
-        # else :
-        #     text = f"An Error occur.😕 \nPlease try again."
-        #     message = QMessageBox (windowTitle = "❌Error!!❌" , text = text)
-        #     message.exec_ ()
 
-    def remove_task ( self ) : ...
+    def remove_task ( self , id ) :
+        feedback = self.database.delete_task (id)
+        if feedback == True : ...
+
+        else : ...
 
 
-    def show_task_info ( self ) : ...
+    def show_task_info ( self , id ) :
+        for i in range (len (self.tasks)) :
+            if self.tasks[i][0] == id :
+                description = self.tasks[i][2]
+                date = self.tasks[i][3]
+                time = self.tasks[i][4]
+        text = f"{description}.📋\nit must be done until : {date} 📅\n before : {time} ⏰"
+        message = QMessageBox (windowTitle = "📂Details📂" , text = text)
+        message.exec_ ()
 
 
 if __name__ == "__main__" :
