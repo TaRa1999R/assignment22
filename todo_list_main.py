@@ -8,111 +8,107 @@ from todo_list_design import Ui_MainWindow
 from todo_list_database import Database
 
 class Mainwindow ( QMainWindow ) :
-
+    
     def __init__ ( self ) :
-        super().__init__() 
+        super().__init__ ()
         self.ui = Ui_MainWindow ()
         self.ui.setupUi (self)
 
         self.database = Database ()
+        self.read_tasks ()
+
+        self.ui.add.clicked.connect (self.add_task)
+        for i in range (len (self.checkbox)) :
+            self.checkbox[i]["checkbox"].clicked.connect (partial (self.check_task , self.checkbox[i]["checkbox"] , self.checkbox[i]["id"]))
+
+    
+    def read_tasks ( self ) :
         self.tasks = self.database.get_tasks ()
+        self.checkbox = []
+        self.button_bin = []
+        self.label_info = []
 
-        self.read_tasks_from_database ()
-
-        self.ui.add.clicked.connect (self.add_new_task)
-
-        # for i in range (len (self.check)) :
-        #     self.check[i]["check"].clicked.connect (partial (self.check_tasks , self.check[i]["check"] , self.check[i]["id"] ,self.check[i]["label"] , self.check[i]["priority"])) 
-
-        # for i in range (len (self.delete)) :
-        #     self.delete[i]["button"].clicked.connect (partial (self.delete_task , self.delete[i]["id"]))
-
-
-
-    def read_tasks_from_database ( self ) :
-        # self.check = []
-        # self.delete = []
-
-        for i in range (len(self.tasks)) :
+        for i in range (len (self.tasks)) :
             if self.tasks[i][6] == 0 :
-                new_chckbox = QCheckBox ()
+                new_checkbox = QCheckBox ()
                 new_label = QLabel ()
                 new_button = QPushButton ()
-                # self.check.append ({"check" : new_chckbox , "id" : self.tasks[i][0] , "label" : new_label , "priority" : self.tasks[i][5]})
-                # self.delete.append ({"button" : new_button , "id" : self.tasks[i][0]})
+                self.checkbox.append ({"checkbox" : new_checkbox , "id" : self.tasks[i][0]})
+                self.button_bin.append ({"button" : new_button , "id" : self.tasks[i][0]})
+                self.label_info.append ({"label" : new_label , "id" : self.tasks[i][0]})
 
+                new_label.setText (self.tasks[i][1])
+                new_button.setText ("🗑")
+                new_checkbox.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
+                new_button.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
+                new_label.setFont (QFont ("Segoe UI" , 12))
+                new_button.setStyleSheet ("background-color: rgb(207,165,255);")
                 if self.tasks[i][5] == 0 :
                     new_label.setStyleSheet ("background-color: rgb(0,255,127);")
                 
                 elif self.tasks[i][5] == 1 :
                     new_label.setStyleSheet ("background-color: rgb(255,160,112);")
 
-                
                 elif self.tasks[i][5] == 2 :
-                    new_label.setStyleSheet ("background-color: rgb(255,61,103);")
+                    new_label.setStyleSheet ("background-color: rgb(255,73,115);")
 
-                new_label.setText (self.tasks[i][1])
-                new_button.setText ("🗑")
-                new_button.setStyleSheet ("background-color: rgb(255,255,127);")
-                new_chckbox.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
-                new_button.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
-                new_label.setFont (QFont ("Segoe UI" , 12))
-                self.ui.task_section.addWidget (new_chckbox , i , 0)
+                self.ui.task_section.addWidget (new_checkbox , i , 0)
                 self.ui.task_section.addWidget (new_label , i , 1)
                 self.ui.task_section.addWidget (new_button , i , 2)
-    
         
-        for i in range (len(self.tasks)) :
+        for i in range (len (self.tasks)) :
             if self.tasks[i][6] == 1 :
-                new_chckbox = QCheckBox ()
+                new_checkbox = QCheckBox ()
                 new_label = QLabel ()
                 new_button = QPushButton ()
-                # self.check.append ({"check" : new_chckbox , "id" : self.tasks[i][0] , "label" : new_label , "priority" : self.tasks[i][5]})
-                # self.delete.append ({"button " : new_button , "id" : self.tasks[i][0]})
-                
-                new_label.setStyleSheet ("background-color: rgb(180,180,180);")
+                self.checkbox.append ({"checkbox" : new_checkbox , "id" : self.tasks[i][0]})
+                self.button_bin.append ({"button" : new_button , "id" : self.tasks[i][0]})
+                self.label_info.append ({"label" : new_label , "id" : self.tasks[i][0]})
+
                 new_label.setText (self.tasks[i][1])
                 new_button.setText ("🗑")
-                new_button.setStyleSheet ("background-color: rgb(255,255,127);")
-                new_chckbox.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
+                new_checkbox.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
                 new_button.setSizePolicy (QSizePolicy.Maximum , QSizePolicy.Fixed)
                 new_label.setFont (QFont ("Segoe UI" , 12))
-                new_chckbox.setChecked (True)
+                new_checkbox.setChecked (True)
+                new_button.setStyleSheet ("background-color: rgb(255,61,103);")
+                new_label.setStyleSheet ("background-color: rgb(195,195,195);")
 
-                self.ui.task_section.addWidget (new_chckbox , i + len (self.check) , 0)
-                self.ui.task_section.addWidget (new_label , i + len (self.check) , 1)
-                self.ui.task_section.addWidget (new_button , i + len (self.check) , 2)
+                self.ui.task_section.addWidget (new_checkbox , i + len (self.checkbox) , 0)
+                self.ui.task_section.addWidget (new_label , i + len (self.checkbox) , 1)
+                self.ui.task_section.addWidget (new_button , i + len (self.checkbox) , 2)
 
-        
-    def add_new_task ( self ) :
-        if self.ui.new_title.text() == "" :
+
+    def add_task ( self ) :
+        if self.ui.title.text () == "" :
             text = f"You haven't type any title for new task.\nPlease write the title and details first, and push the button at the end. \nThanks😇"
             message = QMessageBox (windowTitle = "❌Error!!❌" , text = text)
             message.exec_ ()
         
         else :
-            title = self.ui.new_title.text ()
-            description = self.ui.new_description.toPlainText ()
-            date = self.ui.new_date.text ()
-            time = self.ui.new_time.text ()
+            new_title = self.ui.title.text ()
+            new_description = self.ui.description.toPlainText ()
+            new_date = self.ui.date.text ()
+            new_time = self.ui.time.text ()
             if self.ui.priority.currentText () == "Low" :
-                priority = 0
+                new_priority = 0
             
             elif self.ui.priority.currentText () == "Medium" :
-                priority = 1
+                new_priority = 1
             
             elif self.ui.priority.currentText () == "High" :
-                priority = 2
-            
-            feedback = self.database.add_new_task (title , description , date , time , priority)
+                new_priority = 2
+
+            feedback = self.database.add_task (new_title , new_description , new_date , new_time , new_priority)
 
             if feedback == True :
-                self.read_tasks_from_database ()
-                self.ui.new_title.setText ("")
-                self.ui.new_description.setText ("")
-                self.ui.new_date.setText ("")
-                self.ui.new_time.setText ("")
+                self.read_tasks ()
+                self.ui.title.setText ("")
+                self.ui.description.setText ("")
+                self.ui.date.setText ("")
+                self.ui.time.setText ("")
                 self.ui.priority.setCurrentText ("Low")
+
 
             else :
                 text = f"New task couldn't be added.😒 \nPlease try again."
@@ -120,35 +116,27 @@ class Mainwindow ( QMainWindow ) :
                 message.exec_ ()
 
 
-    # def check_tasks ( self , checkbox , id , label , priority) :
-    #     if checkbox.isChecked () == True :
-    #         self.database.update_task (id , 1)
-    #         label.setStyleSheet ("background-color: rgb(180,180,180);")
 
-
-    #     else :
-    #         self.database.update_task (id , 0)
-    #         if priority == 0 :
-    #             label.setStyleSheet ("background-color: rgb(0,255,127);")
-                
-    #         elif priority == 1 :
-    #             label.setStyleSheet ("background-color: rgb(255,160,112);")
-
-    #         elif priority == 2 :
-    #             label.setStyleSheet ("background-color: rgb(255,61,103);")
+    def check_task ( self , checkbox , id ) :
+        print ("hi")
+        if checkbox.isChecked == True :
+            feedback = self.database.update_task (id , 1)
         
+        else :
+            feedback = self.database.update_task (id , 0)
+        
+        print (feedback)
+        # self.read_tasks ()
+        
+        # else :
+        #     text = f"An Error occur.😕 \nPlease try again."
+        #     message = QMessageBox (windowTitle = "❌Error!!❌" , text = text)
+        #     message.exec_ ()
 
-    # def delete_task ( self , id ) :
-    #     result = self.database.delete_task ( id )
-    #     if result == True :
-    #         self.read_tasks_from_database ()
-    #         print ("Done")
-    #     else :
-    #         print ("Error")
-    #         print(result)
+    def remove_task ( self ) : ...
 
 
-
+    def show_task_info ( self ) : ...
 
 
 if __name__ == "__main__" :

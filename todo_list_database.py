@@ -39,10 +39,14 @@ class Database () :
 
     def update_task ( self , id , mode ) :
         try :
+            t = "0"
             query = f"UPDATE tasks SET state = {mode} WHERE id = {id}"
+            t+="1"
             self.cur.execute (query)
+            t+="2"
             self.con.commit ()
-            return True
+            t+="3"
+            return (t)
         
         except :
             return False

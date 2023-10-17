@@ -163,7 +163,7 @@ class Ui_MainWindow(object):
         font3.setPointSize(12)
         font3.setBold(True)
         self.add.setFont(font3)
-        self.add.setStyleSheet(u"background-color: rgb(255, 255, 127);border-right-bottom-radius: 5xp;")
+        self.add.setStyleSheet(u"background-color: rgb(253, 255, 80);border-right-bottom-radius: 5xp;")
 
         self.add_section.addWidget(self.add, 0, 2, 1, 1)
 

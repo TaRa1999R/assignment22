@@ -287,7 +287,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 127);border-right-bottom-radius: 5xp;</string>
+         <string notr="true">background-color: rgb(253, 255, 80);border-right-bottom-radius: 5xp;</string>
         </property>
         <property name="text">
          <string>+</string>
