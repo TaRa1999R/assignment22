@@ -79,56 +79,56 @@ class Ui_MainWindow(object):
 
         self.add_section.addWidget(self.date_lable, 2, 0, 1, 1)
 
-        self.new_time = QLineEdit(self.centralwidget)
-        self.new_time.setObjectName(u"new_time")
+        self.time = QLineEdit(self.centralwidget)
+        self.time.setObjectName(u"time")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.new_time.sizePolicy().hasHeightForWidth())
-        self.new_time.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.time.sizePolicy().hasHeightForWidth())
+        self.time.setSizePolicy(sizePolicy)
         font1 = QFont()
         font1.setPointSize(12)
-        self.new_time.setFont(font1)
-        self.new_time.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
+        self.time.setFont(font1)
+        self.time.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
 "border-top-left-radius: 0px;\n"
 "border-top-right-radius: 0px;\n"
 "border-bottom-left-radius: 0px;\n"
 "border-bottom-right-radius: 0px;")
-        self.new_time.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.time.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.add_section.addWidget(self.new_time, 3, 1, 1, 1)
+        self.add_section.addWidget(self.time, 3, 1, 1, 1)
 
-        self.new_date = QLineEdit(self.centralwidget)
-        self.new_date.setObjectName(u"new_date")
-        sizePolicy.setHeightForWidth(self.new_date.sizePolicy().hasHeightForWidth())
-        self.new_date.setSizePolicy(sizePolicy)
-        self.new_date.setFont(font1)
-        self.new_date.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
+        self.date = QLineEdit(self.centralwidget)
+        self.date.setObjectName(u"date")
+        sizePolicy.setHeightForWidth(self.date.sizePolicy().hasHeightForWidth())
+        self.date.setSizePolicy(sizePolicy)
+        self.date.setFont(font1)
+        self.date.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
 "border-top-left-radius: 0px;\n"
 "border-top-right-radius: 0px;\n"
 "border-bottom-left-radius: 0px;\n"
 "border-bottom-right-radius: 0px;")
-        self.new_date.setEchoMode(QLineEdit.Normal)
-        self.new_date.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.date.setEchoMode(QLineEdit.Normal)
+        self.date.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.add_section.addWidget(self.new_date, 2, 1, 1, 1)
+        self.add_section.addWidget(self.date, 2, 1, 1, 1)
 
-        self.new_title = QLineEdit(self.centralwidget)
-        self.new_title.setObjectName(u"new_title")
-        sizePolicy.setHeightForWidth(self.new_title.sizePolicy().hasHeightForWidth())
-        self.new_title.setSizePolicy(sizePolicy)
+        self.title = QLineEdit(self.centralwidget)
+        self.title.setObjectName(u"title")
+        sizePolicy.setHeightForWidth(self.title.sizePolicy().hasHeightForWidth())
+        self.title.setSizePolicy(sizePolicy)
         font2 = QFont()
         font2.setPointSize(12)
         font2.setBold(False)
-        self.new_title.setFont(font2)
-        self.new_title.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
+        self.title.setFont(font2)
+        self.title.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
 "border-top-left-radius: 0px;\n"
 "border-top-right-radius: 0px;\n"
 "border-bottom-left-radius: 0px;\n"
 "border-bottom-right-radius: 0px;")
-        self.new_title.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.title.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.add_section.addWidget(self.new_title, 0, 1, 1, 1)
+        self.add_section.addWidget(self.title, 0, 1, 1, 1)
 
         self.priority = QComboBox(self.centralwidget)
         self.priority.addItem("")
@@ -144,18 +144,18 @@ class Ui_MainWindow(object):
 
         self.add_section.addWidget(self.priority, 4, 1, 1, 1)
 
-        self.new_description = QTextEdit(self.centralwidget)
-        self.new_description.setObjectName(u"new_description")
-        sizePolicy.setHeightForWidth(self.new_description.sizePolicy().hasHeightForWidth())
-        self.new_description.setSizePolicy(sizePolicy)
-        self.new_description.setFont(font1)
-        self.new_description.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
+        self.description = QTextEdit(self.centralwidget)
+        self.description.setObjectName(u"description")
+        sizePolicy.setHeightForWidth(self.description.sizePolicy().hasHeightForWidth())
+        self.description.setSizePolicy(sizePolicy)
+        self.description.setFont(font1)
+        self.description.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
 "border-top-left-radius: 0px;\n"
 "border-top-right-radius: 0px;\n"
 "border-bottom-left-radius: 0px;\n"
 "border-bottom-right-radius: 0px;")
 
-        self.add_section.addWidget(self.new_description, 1, 1, 1, 1)
+        self.add_section.addWidget(self.description, 1, 1, 1, 1)
 
         self.add = QPushButton(self.centralwidget)
         self.add.setObjectName(u"add")
@@ -191,17 +191,17 @@ class Ui_MainWindow(object):
         self.title_lable.setText(QCoreApplication.translate("MainWindow", u"title", None))
         self.priority_lable.setText(QCoreApplication.translate("MainWindow", u"priority", None))
         self.date_lable.setText(QCoreApplication.translate("MainWindow", u"date", None))
-        self.new_time.setInputMask("")
-        self.new_time.setText("")
-        self.new_date.setInputMask("")
-        self.new_date.setText("")
-        self.new_title.setInputMask("")
-        self.new_title.setText("")
+        self.time.setInputMask("")
+        self.time.setText("")
+        self.date.setInputMask("")
+        self.date.setText("")
+        self.title.setInputMask("")
+        self.title.setText("")
         self.priority.setItemText(0, QCoreApplication.translate("MainWindow", u"Low", None))
         self.priority.setItemText(1, QCoreApplication.translate("MainWindow", u"Medium", None))
         self.priority.setItemText(2, QCoreApplication.translate("MainWindow", u"High", None))
 
-        self.new_description.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.description.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
