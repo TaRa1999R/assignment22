@@ -7,6 +7,7 @@ class Database () :
         self.con = sqlite3.connect ("todo_list.db")
         self.cur = self.con.cursor ()
 
+
     def get_tasks ( self ) :
         query = f"SELECT * FROM tasks"
         result = self.cur.execute (query)
@@ -41,7 +42,3 @@ class Database () :
         query = f"UPDATE tasks SET state = {mode} WHERE id = {id}"
         self.cur.execute (query)
         self.con.commit ()
-            
-        
-# db = Database ()
-# print(db.update_task ( 1 , 1))

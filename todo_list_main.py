@@ -127,7 +127,7 @@ class Mainwindow ( QMainWindow ) :
 
 
             else :
-                text = f"New task couldn't be added.😒 \nPlease try again."
+                text = f"New task couldn't be added. 🤔\nPlease try again.😏"
                 message = QMessageBox (windowTitle = "❌Error!!❌" , text = text)
                 message.exec_ ()
 
@@ -140,12 +140,18 @@ class Mainwindow ( QMainWindow ) :
         else :
             self.database.update_task (id , 0)
         
+        # self.read_tasks ()
 
     def remove_task ( self , id ) :
         feedback = self.database.delete_task (id)
-        if feedback == True : ...
+        # if feedback == True : 
+        #     self.read_tasks ()
 
-        else : ...
+        # else :
+        #     text = f"Task couldn't be deleted.🤔 \nPlease try again.😏"
+        #     message = QMessageBox (windowTitle = "❌Error!!❌" , text = text)
+        #     message.exec_ ()
+
 
 
     def show_task_info ( self , id ) :
